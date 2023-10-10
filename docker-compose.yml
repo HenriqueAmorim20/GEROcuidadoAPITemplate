@@ -5,7 +5,7 @@ services:
     container_name: gerocuidado-template-api
     volumes:
       - .:/home/node/app
-    entrypoint: sh /home/node/app/.docker/entrypoint.sh
+    entrypoint: bash /home/node/app/.docker/entrypoint.sh
     environment:
       - NODE_ENV=development
     ports:
@@ -29,7 +29,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - '500X:500X'
+      - '500x:500x'
     networks:
       - gerocuidado-template-net
 
