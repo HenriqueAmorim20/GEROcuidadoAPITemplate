@@ -1,6 +1,6 @@
 # Atenção ao criar uma nova api (apagar essa seção)
 
-Esse repositório não contem nenhuma configuração de workflows, métricas ou sonar (se basear na configuração atual dos existentes para criar do novo).
+Esse repositório não contem nenhuma configuração de workflows, secrets do github, métricas ou sonar (se basear na configuração atual dos existentes para criar do novo).
 
 Substitua as seguintes váriáveis através da busca avançada:
 
@@ -11,6 +11,8 @@ Substitua as seguintes váriáveis através da busca avançada:
 * Prefixo dos containers: -template
 
 Verifique a questão das rotas protegidas criando um GUARD, se baseando também nas outras APIs. Existe um decorator ```@PublicRoute()``` para definir rotas públicas, mas ele só funciona junto ao modelo de GUARD que está nas outras APIs.
+
+Além disso, para produção, é necessário criar um novo repositório no Docker Hub para armazenar as imagens docker e também expor as portas da nova API na instância EC2 da AWS
 
 # gerocuidado-template-api
 
