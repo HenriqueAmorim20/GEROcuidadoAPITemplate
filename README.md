@@ -10,7 +10,7 @@ Substitua as seguintes váriáveis através da busca avançada:
 * Prefixo das rotas: /template
 * Prefixo dos containers: -template
 
-Verifique a questão das rotas protegidas criando um GUARD, se baseando também nas outras APIs. Existe um decorator ```@PublicRoute()``` para definir rotas públicas, mas ele só funciona junto ao modelo de GUARD que está nas outras APIs.
+Verifique a questão das rotas protegidas criando um GUARD e uma conexão TCP com a api usuário, se baseando também nas outras APIs. Existe um decorator ```@PublicRoute()``` para definir rotas públicas, mas ele só funciona junto ao modelo de GUARD que está nas outras APIs.
 
 Além disso, para produção, é necessário criar um novo repositório no Docker Hub para armazenar as imagens docker e também expor as portas da nova API na instância EC2 da AWS
 
