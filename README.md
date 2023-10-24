@@ -1,87 +1,83 @@
-# Valores a serem alterados na busca avançada (apagar essa parte):
+# Atenção ao criar uma nova api (apagar essa seção)
+
+Esse repositório não contem nenhuma configuração de workflows, métricas ou sonar (se basear na configuração atual dos existentes para criar do novo).
+
+Substitua as seguintes váriáveis através da busca avançada:
 
 * Porta da aplicação: 300x
 * Porta do banco de dados: 500x
-* Porta DEGUB: 700x e 900x
-* Nome da API: APITemplate
+* Porta DEGUB: 700x
 * Prefixo das rotas: /template
 * Prefixo dos containers: -template
 
-# GEROcuidado-APITemplate
+Verifique a questão das rotas protegidas criando um GUARD, se baseando também nas outras APIs. Existe um decorator ```@PublicRoute()``` para definir rotas públicas, mas ele só funciona junto ao modelo de GUARD que está nas outras APIs.
 
-## CONFIGURAÇÃO
+# gerocuidado-template-api
 
-Definir valores iguais para os arquivos .env e docker-compose.
+## Configuração
 
-Arquivo .env:
+Definir valores iguais para os arquivos .env e docker-compose
+
+Arquivo .env.development e .env.test:
 
     #POSTGRES
-    DB_TYPE='postgres'
-    DB_HOST='localhost'
-    DB_USERNAME='postgres'
-    DB_PASS='postgres'
-    DB_DATABASE='gerocuidado-template-db'
-    DB_PORT=500x
+    DB_TYPE=
+    DB_HOST=
+    DB_USERNAME=
+    DB_PASS=
+    DB_DATABASE=
+    DB_PORT=
 
 Arquivo .docker-compose, na seção **_environment_**:
 
     ...
     environment:
-      - POSTGRES_DB=gerocuidado-template-db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=
+      - POSTGRES_USER=
+      - POSTGRES_PASSWORD=
     ...
 
-## AMBIENTES
+Da mesma forma, alterar os valores das portas terminadas em **_x_** (i.e 300x para 300x) para a porta desejada nos arquivos de compose, bem como no arquivo launch.json da pasta .vscode.
 
-### DEV
+## Execução
 
-    ```bash
-    docker-compose up
-    ```
-
-#### INSTALAR DEPENDÊNCIAS E CRIAR NOVAS FUNCIONALIDADES
-
-```bash
-docker-compose exec gerocuidado-template-api bash
-nest g resource users
-```
-
-### TEST
-
-- GERAL
+  Para subir a aplicação, basta rodar o comando:
 
   ```bash
-  docker-compose -f docker-compose.test.yml up
+  docker compose up
   ```
 
-  após em um novo terminal
+## Testes
+
+  Para testar a aplicação, suba o container de testes:
 
   ```bash
-  docker-compose -f docker-compose.test.yml exec gerocuidado-template-api-test bash
-  cd /home/node/app
-  npm run test
-  npm run test:cov
-  npm run test:e2e
-  npm run test:e2e:cov
+    TEST=dev docker compose -f docker-compose.test.yml up
   ```
 
-- UNIT
+ E rode os comandos para os testes unitários e E2E respectivamente (:cov gera o arquivo de coverage na raiz do projeto):
+  ```bash
+    npm run test:cov
+    npm run test:e2e:cov
+  ```
 
-    Para apenas rodar os testes unitários e sair do container rode o comando abaixo:
+ ## Migrations
 
-    ```bash
-    TEST=unit docker-compose -f docker-compose.test.yml up --abort-on-container-exit --exit-code-from gerocuidado-template-api-test
-    ```
+  Sempre que houver qualquer alteração em alguma entidade na aplicação (adicionar uma entidade, remover ou edita-la), deve ser gerada uma migration para sincronizar o banco de dados.
 
-- E2E
-    Para apenas rodar os testes unitários e sair do container rode o comando abaixo:
+  1. Entrar no container da api:
 
-    ```bash
-    TEST=e2e docker-compose -f docker-compose.test.yml up --abort-on-container-exit --exit-code-from gerocuidado-template-api-test
-    ```
+  ```bash
+    docker exec -it gerocuidado-template-api bash
+  ```
 
-# ENVIRONMENTS VARIABLES
+  2. Rodar o comando de criar uma migration (tente dar um nome descritivo, ex.: CreateTableExemplo)
+
+  ```bash
+    npm run typeorm:migrate src/migration/NOME_DA_MIGRATION
+  ```
+
+# Dicionário variáveis de ambiente
 
 | ENV         | Descrição              | Valor Padrão            |
 | ----------- | ---------------------- | ----------------------- |
